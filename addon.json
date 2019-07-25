@@ -1,0 +1,9 @@
+{
+    "title":"Html Chatbox",
+    "type":"ServerContent",
+    "tags":["fun"],
+    "ignore":[
+        "LICENSE",
+        ".git/*"
+    ]
+}
