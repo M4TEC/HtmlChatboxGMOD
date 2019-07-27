@@ -172,6 +172,7 @@ local function Init()
                         for (var i = 0;i<args.length;i++) {
                             var arg = args[i];
                             if (typeof(arg) == "string") {
+                                arg = arg.replace(/<\/?[^>]*>/g, '');
                                 arg = arg.replace("[滑稽]","<img src='https://tb2.bdstatic.com/tb/editor/images/face/i_f25.png'/>");
                                 arg = arg.replace("[洛天依]","<img src='https://texas.penguin-logistics.cn/wp-content/uploads/2019/07/67857426_p0.png'/>");
                                 arg = arg.replace(/发送图片\[(.*?)\]/g,"<img src='$1'/>");
