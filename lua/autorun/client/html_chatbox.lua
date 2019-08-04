@@ -32,6 +32,7 @@ local function Init()
                     ["player"] = true,
                     ["name"] = arg:Name(),
                     ["team"] = {
+                        ["id"] = arg:Team(),
                         ["name"] = team.GetName(arg:Team()),
                         ["color"] = team.GetColor(arg:Team())
                     }
@@ -172,7 +173,8 @@ local function Init()
                         for (var i = 0;i<args.length;i++) {
                             var arg = args[i];
                             if (typeof(arg) == "string") {
-                                arg = arg.replace(/<\/?[^>]*>/g, '');
+                                //arg = arg.replace(/<\/?[^>]*script.*?>/g, '');
+                                arg = arg.replace(/<\/?[^>]*[script|style].*?>/ig, '');// Allowed to use some simple tags
                                 arg = arg.replace("[滑稽]","<img src='https://tb2.bdstatic.com/tb/editor/images/face/i_f25.png'/>");
                                 arg = arg.replace("[洛天依]","<img src='https://texas.penguin-logistics.cn/wp-content/uploads/2019/07/67857426_p0.png'/>");
                                 arg = arg.replace(/发送图片\[(.*?)\]/g,"<img src='$1'/>");
@@ -186,6 +188,14 @@ local function Init()
                                 if (arg.player) {
                                     if (currentColor != null) {
                                         p.append(currentColor);
+                                    }
+                                    if (arg.team.id != 1001) {
+                                        p.append("<span style='color:white;'>[</span>");
+                                        currentColor = $("<span style='color:rgba(" + arg.team.color.r + "," + arg.team.color.g + "," + arg.team.color.b + "," + arg.team.color.a + ");'></span>");
+                                        currentColor.append(arg.team.name);
+                                        p.append(currentColor);
+                                        currentColor = null;
+                                        p.append("<span style='color:white;'>]&nbsp;</span>");
                                     }
                                     currentColor = $("<span style='color:rgba(" + arg.team.color.r + "," + arg.team.color.g + "," + arg.team.color.b + "," + arg.team.color.a + ");'></span>");
                                     currentColor.append(arg.name);
