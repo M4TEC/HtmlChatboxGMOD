@@ -147,10 +147,10 @@ local function Init()
                         chatbox.focus();
                         $("input").blur();
                     });
-                    $(window).keydown(function() {
+                    /*$(window).keydown(function() {
                         chatbox.focus();
                         $("input").blur();
-                    });
+                    });*/ // Allowed to copy
                     function show() {
                         $("body").addClass("show");
                     }
@@ -174,7 +174,7 @@ local function Init()
                             var arg = args[i];
                             if (typeof(arg) == "string") {
                                 //arg = arg.replace(/<\/?[^>]*script.*?>/g, '');
-                                arg = arg.replace(/<\/?[^>]*[script|style].*?>/ig, '');// Allowed to use some simple tags
+                                arg = arg.replace(/<\/?[script|style].*?>/ig, '');// Allowed to use some simple tags
                                 arg = arg.replace("[滑稽]","<img src='https://tb2.bdstatic.com/tb/editor/images/face/i_f25.png'/>");
                                 arg = arg.replace("[洛天依]","<img src='https://texas.penguin-logistics.cn/wp-content/uploads/2019/07/67857426_p0.png'/>");
                                 arg = arg.replace(/发送图片\[(.*?)\]/g,"<img src='$1'/>");
