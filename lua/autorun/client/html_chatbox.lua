@@ -162,8 +162,8 @@ local function Init()
                         $("input").val(" ");
                         $("input").addClass("focus");
                     }
-                    function losefocus() {
-                        $("input").val("");
+                    function losefocus(text) {
+                        $("input").val(text);
                         $("input").removeClass("focus");
                     }
                     function addText(json) {
@@ -174,9 +174,11 @@ local function Init()
                             var arg = args[i];
                             if (typeof(arg) == "string") {
                                 //arg = arg.replace(/<\/?[^>]*script.*?>/g, '');
-                                arg = arg.replace(/<\/?[script|style].*?>/ig, '');// Allowed to use some simple tags
-                                arg = arg.replace("[滑稽]","<img src='https://tb2.bdstatic.com/tb/editor/images/face/i_f25.png'/>");
-                                arg = arg.replace("[洛天依]","<img src='https://texas.penguin-logistics.cn/wp-content/uploads/2019/07/67857426_p0.png'/>");
+                                arg = arg.replace(/<\/*?(script|style).*?>/ig, '');// Allowed to use some simple tags
+                                arg = arg.replace(/\[滑稽\]/g,"<img src='https://tb2.bdstatic.com/tb/editor/images/face/i_f25.png'/>");
+                                arg = arg.replace(/\[洛天依\]/g,"<img src='https://texas.penguin-logistics.cn/wp-content/uploads/2019/07/67857426_p0.png'/>");
+                                arg = arg.replace(/\[威胁\]/g,"<img src='https://texas.penguin-logistics.cn/wp-content/uploads/2019/08/GADTFQGS070L2PS2D.jpg'/>");
+                                arg = arg.replace(/\[威胁失败\]/g,"<img src='https://texas.penguin-logistics.cn/wp-content/uploads/2019/08/C_2GUUR9XYQXSF8HKC.jpg'/>");
                                 arg = arg.replace(/发送图片\[(.*?)\]/g,"<img src='$1'/>");
                                 arg = arg.replace(/SendImage\[(.*?)\]/g,"<img src='$1'/>");
                                 if (currentColor == null) {
@@ -274,7 +276,7 @@ local function Init()
             HtmlChatBox:RunJavascript("focus()")
         end
         function HtmlChatBox.TextEntry:OnLoseFocus()
-            HtmlChatBox:RunJavascript("losefocus()")
+            HtmlChatBox:RunJavascript("losefocus(\""..self:GetValue():JavascriptSafe().."\")")
         end
         function HtmlChatBox.TextEntry:OnKeyCodeTyped(key)
             if key == KEY_ESCAPE then
