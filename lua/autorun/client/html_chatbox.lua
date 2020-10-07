@@ -225,6 +225,9 @@ local function Init()
                             });
                         }
                         $("div.messages").append(p);
+                        if ($("div.messages").children().length > 50) {
+                            $("div.messages").children()[0].remove();
+                        }
                         if (scrollBottom) {
                             $("div.messages").prop("scrollTop",$("div.messages").prop("scrollHeight"));
                         }
