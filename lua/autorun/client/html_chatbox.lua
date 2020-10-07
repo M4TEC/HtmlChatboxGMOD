@@ -1,7 +1,7 @@
 local function Init()
     surface.CreateFont("HCB_TextEntryFont", {
         font = "Microsoft YaHei",
-        extended = false,
+        extended = true,
         size = 18,
         weight = 500,
         blursize = 0,
@@ -176,11 +176,13 @@ local function Init()
                                 //arg = arg.replace(/<\/?[^>]*script.*?>/g, '');
                                 arg = arg.replace(/<\/*?(script|style).*?>/ig, '');// Allowed to use some simple tags
                                 arg = arg.replace(/\[滑稽\]/g,"<img src='https://tb2.bdstatic.com/tb/editor/images/face/i_f25.png'/>");
-                                arg = arg.replace(/\[洛天依\]/g,"<img src='https://texas.penguin-logistics.cn/wp-content/uploads/2019/07/67857426_p0.png'/>");
-                                arg = arg.replace(/\[威胁\]/g,"<img src='https://texas.penguin-logistics.cn/wp-content/uploads/2019/08/GADTFQGS070L2PS2D.jpg'/>");
-                                arg = arg.replace(/\[威胁失败\]/g,"<img src='https://texas.penguin-logistics.cn/wp-content/uploads/2019/08/C_2GUUR9XYQXSF8HKC.jpg'/>");
+                                //arg = arg.replace(/\[洛天依\]/g,"<img src='https://texas.penguin-logistics.cn/wp-content/uploads/2019/07/67857426_p0.png'/>");
+                                arg = arg.replace(/\[威胁\]/g,"<img src='https://drive.luotianyi.fans/api/v3/file/get/51/tohru_cut.png?sign=EAU-cCfKCC-a88X6FosWo5LD5YzU42yAVS39iNmNcts%3D%3A0'/>");
+                                arg = arg.replace(/\[威胁失败\]/g,"<img src='https://drive.luotianyi.fans/api/v3/file/get/52/tohru_cutted.png?sign=26Wjzmwln-ByuFZ7Zxh1KT6ysVfUkExw3umBPxEkvy0%3D%3A0'/>");
                                 arg = arg.replace(/发送图片\[(.*?)\]/g,"<img src='$1'/>");
                                 arg = arg.replace(/SendImage\[(.*?)\]/g,"<img src='$1'/>");
+                                arg = arg.replace(/图片\[(.*?)\]/g,"<img src='$1'/>");
+                                arg = arg.replace(/Image\[(.*?)\]/g,"<img src='$1'/>");
                                 if (currentColor == null) {
                                     p.append(arg);
                                 } else {
@@ -216,6 +218,12 @@ local function Init()
                         }
                         p.css("opacity","1");
                         var scrollBottom = $("div.messages").prop("scrollHeight")-($("div.messages").prop("scrollTop")+144) <= 5;
+                        if ($("div.messages > p").length >= 50) {
+                            var els = $("div.messages > p").splice(0,$("div.messages > p").length-50);
+                            $.each(els,function(_,el) {
+                                el.remove();
+                            });
+                        }
                         $("div.messages").append(p);
                         if (scrollBottom) {
                             $("div.messages").prop("scrollTop",$("div.messages").prop("scrollHeight"));
@@ -286,7 +294,11 @@ local function Init()
                 HtmlChatBox:RunJavascript([[hide()]])
                 self:Remove()
             elseif key == KEY_ENTER then
-                LocalPlayer():ConCommand([[say "]]..HtmlChatBox.TextEntry:GetValue()..[["]])
+                if teamMessage then
+                    LocalPlayer():ConCommand([[say_team "]]..HtmlChatBox.TextEntry:GetValue()..[["]])
+                else
+                    LocalPlayer():ConCommand([[say "]]..HtmlChatBox.TextEntry:GetValue()..[["]])
+                end
                 HtmlChatBox:SetMouseInputEnabled(false)
                 HtmlChatBox:SetKeyBoardInputEnabled(false)
                 HtmlChatBox:RunJavascript([[hide()]])
