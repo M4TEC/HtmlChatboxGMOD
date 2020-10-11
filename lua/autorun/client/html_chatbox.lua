@@ -311,4 +311,4 @@ local function Init()
     end)
 end
 hook.Add("InitPostEntity","HCB_Init",Init)
-Init()
+if HtmlChatBox then Init()end
